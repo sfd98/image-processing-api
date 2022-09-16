@@ -59,3 +59,12 @@ Although not a requirement, we recommend using Git from the very beginning if yo
 ## License
 
 [License](LICENSE.txt)
+
+
+To start:
+
+- Setup initial route to check if any files are inside the images folder
+   - Test: If files the process should continue. If not, a error has to be displayed.
+- Retrieve the parameters set in the url and set them to variables
+- Introduce the variables into the sharp dependency
+- If files in the folder and valid variables are set, then resize with sharp and input into new folder
