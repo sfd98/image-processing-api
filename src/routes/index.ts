@@ -1,5 +1,5 @@
 import express from "express";
-import secondary from "./api/secondary";
+import convert from "./api/convert";
 
 const routes = express.Router();
 
@@ -7,6 +7,6 @@ routes.get("/", (req, res) => {
   res.send("main api route");
 });
 
-routes.use("/secondary", secondary);
+routes.use("/convert", convert);
 
 export default routes;
