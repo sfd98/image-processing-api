@@ -7,6 +7,7 @@ const express_1 = __importDefault(require("express"));
 const convert_1 = __importDefault(require("./api/convert"));
 const routes = express_1.default.Router();
 routes.get("/", (req, res) => {
+    res.send("Hello API!");
 });
 routes.use("/convert", convert_1.default);
 exports.default = routes;
