@@ -4,7 +4,6 @@
   "description": "image processing api for udacity course project 1",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon src/index.ts",
     "build": "npx tsc"
   },
@@ -25,6 +24,7 @@
   "devDependencies": {
     "@types/express": "^4.17.14",
     "@types/node": "^18.7.18",
+    "@types/sharp": "^0.31.0",
     "dotenv": "^16.0.2",
     "eslint": "^8.23.1",
     "jasmine": "^4.4.0",
