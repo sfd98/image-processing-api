@@ -63,8 +63,16 @@ Although not a requirement, we recommend using Git from the very beginning if yo
 
 To start:
 
-- Setup initial route to check if any files are inside the images folder
-   - Test: If files the process should continue. If not, a error has to be displayed.
-- Retrieve the parameters set in the url and set them to variables
-- Introduce the variables into the sharp dependency
-- If files in the folder and valid variables are set, then resize with sharp and input into new folder
+- Setup initial route to check if any files are inside the images folder OK
+- Retrieve the parameters set in the url and set them to variables OK
+- Introduce the variables into the sharp dependency OK
+- If files in the folder and valid variables are set, then resize with sharp and input into new folder OK
+
+- Test for endpoint
+- Test for image processing
+
+- Add caching
+
+- Add error messages
+
+- Add information to the readme file
