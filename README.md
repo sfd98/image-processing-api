@@ -2,11 +2,17 @@
 
 ## How to use the API
 
-- Start the server by running npm run start
+- The Project Specification site was not found until everything was completed :(
+- This API does not have any interface. It does not display the images in the browser.
+- Start the server by running "npm run start". Build it with "npx tsc". Test it with npm run test
 - Navigate to /api by typing it into the URL
-- Write your instructions for the image processing in the URL based on the provided syntax
+- Write your instructions for the image processing in the URL based on the provided syntax (without *: api/convert?filename=*filename*&width=*number*&height=*number\*)
 - Available image files are the ones provided by udacity. (encenadaport, fjord, icelandwaterfall, palmtunnel, santamonica)
 - Run the API and check the thumb folder which includes the generated image
+
+## Additional information
+
+- Regarding prettier: The VSCode Extention was used for this project.
 
 # Given Instructions
 
