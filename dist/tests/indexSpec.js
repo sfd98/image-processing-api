@@ -14,10 +14,23 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const supertest_1 = __importDefault(require("supertest"));
 const index_1 = __importDefault(require("../index"));
+const https_1 = __importDefault(require("https"));
+const fs_1 = __importDefault(require("fs"));
 const request = (0, supertest_1.default)(index_1.default);
 describe('Test endpoint responses', () => {
-    it('gets the api endpoint', () => __awaiter(void 0, void 0, void 0, function* () {
-        const response = yield request.get('/api/convert');
+    it('gets the main api endpoint', () => __awaiter(void 0, void 0, void 0, function* () {
+        const response = yield request.get("/api");
         expect(response.status).toBe(200);
+    })),
+        it('gets the api/convert endpoint', () => __awaiter(void 0, void 0, void 0, function* () {
+            const response = yield request.get("/api/convert");
+            expect(response.status).toBe(200);
+        }));
+});
+describe("Test image processing", () => {
+    //STILL NOT WORKING
+    it("creates a new file", () => __awaiter(void 0, void 0, void 0, function* () {
+        https_1.default.get("https://localhost:3000/api/convert?filename=fjord&width=200&height=200");
+        expect(fs_1.default.existsSync("./thumb/thumb_fjord_200_200.jpg") === true);
     }));
 });
