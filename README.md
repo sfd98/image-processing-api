@@ -1,5 +1,15 @@
 # Image Processing API
 
+## How to use the API
+
+- Start the server by running npm run start
+- Navigate to /api by typing it into the URL
+- Write your instructions for the image processing in the URL based on the provided syntax
+- Available image files are the ones provided by udacity. (encenadaport, fjord, icelandwaterfall, palmtunnel, santamonica)
+- Run the API and check the thumb folder which includes the generated image
+
+# Given Instructions
+
 This project aims to give you a real-world scenario in which you would read and write to your disk via a Node.js express server rather than a database. The project you create serves two purposes: to prepare you for setting up scalable code and architecture for real-world projects and tie together some of the most popular middleware and utilities found in Node.js projects. This project barely touches the surface of what is possible but will prove your ability to use what you’ve learned in real-world scenarios.
 
 For this project, refactor and test as much as possible while you are building. Since you are using TypeScript and an unfamiliar library, it is sometimes easier to write and build in plain JS to see what your functions return; remember your submission needs to be in TypeScript. As your skills improve, typing in TypeScript will feel more intuitive. Make sure to remove any debugging code from your final submission.
@@ -59,20 +69,3 @@ Although not a requirement, we recommend using Git from the very beginning if yo
 ## License
 
 [License](LICENSE.txt)
-
-
-To start:
-
-- Setup initial route to check if any files are inside the images folder OK
-- Retrieve the parameters set in the url and set them to variables OK
-- Introduce the variables into the sharp dependency OK
-- If files in the folder and valid variables are set, then resize with sharp and input into new folder OK
-
-- Test for endpoint
-- Test for image processing
-
-- Add caching
-
-- Add error messages
-
-- Add information to the readme file
