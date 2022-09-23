@@ -4,59 +4,48 @@ import fs from "fs";
 
 const convert = express.Router();
 
-convert.get("/", (req, res) => {
-  //Variable decleration. First three initial Params directly taken from url, last three converted params into usable variables in methods.
-  const filenameParam = req.query.filename;
-  const widthParam = req.query.width;
-  const heightParam = req.query.height;
-  const filename = String(filenameParam);
-  const width = Number(widthParam);
-  const height = Number(heightParam);
+convert.get("/", (req: express.Request, res: express.Response): void => {
+	//Variable decleration.
+	//Those three variables are taken from the URL using the properties in the req.query object
+	const filename = String(req.query.filename);
+	const width = Number(req.query.width);
+	const height = Number(req.query.height);
 
-  //Variable to access the image directory
-  const imageDirectory: string = "images/" + String(filenameParam) + ".jpg";
+	//Variable in which the image directory of the requested image is saved
+	const imageDirectory: string = "images/" + filename + ".jpg";
 
-  //Image processing
-  try {
-    //Error handling. Check error messages to understand the effect
-    if (!/\?.+/.test(req.url)) {
-      res.status(400);
-      throw "No query string!";
-    }
+	//Image processing
+	try {
+		//Error handling. If error send error code 400.
 
-    if (fs.existsSync(imageDirectory) == false) {
-      res.status(400);
-      throw "File not found. Check the spelling of the filename or use another one!";
-    }
+		if (!filename || !width || !height) {
+			//check if any parameter was not set or numerical values are 0
+			res.status(400);
+			throw "Parameters in the query uncomplete or set to 0!";
+		} else if (fs.existsSync(imageDirectory) == false) {
+			//using Syncronous code, checking if the requested image exists
+			res.status(400);
+			throw "File not found. Check the spelling of the filename or use another one!";
+		} else if (width < 0 || height < 0) {
+			//check if any numerical value is smaller than 0
+			res.status(400);
+			throw "Width and height should be > 0.";
+		} else {
+			//Image processing with sharp
+			sharp(imageDirectory) //Access the image directory of the image that is to be processed
+				.resize(width, height) //input of the numerical parameters to perform the resize
+				.toFile("thumb/thumb_" + filename + "_" + width + "_" + height + ".jpg") //create a new file in the folder thumb with the name including the set parameters
+				.catch((err) => console.log(err)); //catch any error and display it to the console
 
-    if (!filenameParam) {
-      res.status(400);
-      throw "No filename!";
-    }
-
-    if (!widthParam || !heightParam) {
-      res.status(400);
-      throw "No width or height!";
-    }
-
-    if (width < 0 || height < 0) {
-      res.status(400);
-      throw "Width and height should be > 0.";
-    }
-
-    //Image processing with sharp
-    sharp(imageDirectory)
-      .resize(width, height)
-      .toFile("thumb/thumb_" + filename + "_" + width + "_" + height + ".jpg")
-      .catch((err) => console.log(err));
-
-    res.send("Successful, please check the thumb folder.");
-    res.status(200);
-  } catch (err) {
-    console.log(err);
-    res.send(err + " Return to /api to check the syntax again.");
-    res.status(400);
-  }
+			//Send successful message and status 200 if operation complete
+			res.send("Successful, please check the thumb folder.");
+			res.status(200);
+		}
+	} catch (err) {
+		//Send error message and status 500 if operation faulty
+		res.send(err + " If necessary return to /api to check the syntax again.");
+		res.status(500);
+	}
 });
 
 export default convert;

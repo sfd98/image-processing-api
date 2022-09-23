@@ -1,30 +1,29 @@
-import supertest from "supertest";
+import request from "supertest";
 import app from "../index";
-
-const request = supertest(app);
+import fs from "fs";
+import sharp from "sharp";
 
 describe("Test endpoint responses", () => {
-    
-	it("gets the main api endpoint", async () => {
-		const response = await request.get("/api");
-		expect(response.status).toBe(200);
+	it("gets the main api endpoint", () => {
+		request(app).get("/api").expect(200);
 	}),
-
-	it("gets the api/convert endpoint", async () => {
-		const response = await request.get("/api/convert");
-		expect(response.status).toBe(200);
+	it("gets a full request", () => {
+		request(app)
+			.get("/api/convert?filename=fjord&width=567&height=789")
+			.expect(200);
+	}),
+	it("throws error at wrong syntax", () => {
+		request(app)
+			.get("/api/convert?filename=fjord&width=567&height=-789")
+			.expect(400);
 	});
 });
 
 describe("Test image processing", () => {
-
-	it("creates file and is successful", async () => {
-		const response = await request.get("/api/convert?filename=fjord&width=200&height=200");
-		expect(response.status).toBe(200);
-	}),
-    
-	it("throws bad request with wrong syntax", async () => {
-		const response = await request.get("/api/convert?filename=fjord&width=200&height=-200");
-		expect(response.status).toBe(400);
+	it("creates a new image", () => {
+		sharp("images/fjord.jpg")
+			.resize(123, 456)
+			.toFile("thumb/test_fjord_123_456.jpg");
+		expect(fs.existsSync("thumb/test_fjord_123_456.jpg") == true);
 	});
 });

@@ -8,48 +8,46 @@ const sharp_1 = __importDefault(require("sharp"));
 const fs_1 = __importDefault(require("fs"));
 const convert = express_1.default.Router();
 convert.get("/", (req, res) => {
-    //Variable decleration. First three initial Params directly taken from url, last three converted params into usable variables in methods.
-    const filenameParam = req.query.filename;
-    const widthParam = req.query.width;
-    const heightParam = req.query.height;
-    const filename = String(filenameParam);
-    const width = Number(widthParam);
-    const height = Number(heightParam);
-    const imageDirectory = "images/" + String(filenameParam) + ".jpg";
-    //Error handling. Check in this order: Query String, file exists, filename parameter set, width or height parameter set
-    /*try {
-      if (!/\?.+/.test(req.url))
-        throw "No query string!"
-      if (fs.existsSync(imageDirectory) == false)
-        throw "File not found. Check the spelling of the filename or use another one!";
-      if (!filenameParam)
-        throw "No filename!"
-      if (!widthParam || !heightParam)
-        throw "No width or height!";
-      } catch (err) {
-        console.log(err)
-        res.send(err + " Return to /api to check the syntax again.")
-    };*/
+    //Variable decleration.
+    //Those three variables are taken from the URL using the properties in the req.query object
+    const filename = String(req.query.filename);
+    const width = Number(req.query.width);
+    const height = Number(req.query.height);
+    //Variable in which the image directory of the requested image is saved
+    const imageDirectory = "images/" + filename + ".jpg";
     //Image processing
     try {
-        if (!/\?.+/.test(req.url))
-            throw "No query string!";
-        if (fs_1.default.existsSync(imageDirectory) == false)
+        //Error handling. If error send error code 400.
+        if (!filename || !width || !height) {
+            //check if any parameter was not set or numerical values are 0
+            res.status(400);
+            throw "Parameters in the query uncomplete or set to 0!";
+        }
+        else if (fs_1.default.existsSync(imageDirectory) == false) {
+            //using Syncronous code, checking if the requested image exists
+            res.status(400);
             throw "File not found. Check the spelling of the filename or use another one!";
-        if (!filenameParam)
-            throw "No filename!";
-        if (!widthParam || !heightParam)
-            throw "No width or height!";
-        (0, sharp_1.default)(imageDirectory)
-            .resize(width, height)
-            .toFile("thumb/thumb_" + filename + "_" + width + "_" + height + ".jpg")
-            .catch(err => console.log(err));
-        res.send("Successful, please check the thumb folder.");
-        res.status(200);
+        }
+        else if (width < 0 || height < 0) {
+            //check if any numerical value is smaller than 0
+            res.status(400);
+            throw "Width and height should be > 0.";
+        }
+        else {
+            //Image processing with sharp
+            (0, sharp_1.default)(imageDirectory) //Access the image directory of the image that is to be processed
+                .resize(width, height) //input of the numerical parameters to perform the resize
+                .toFile("thumb/thumb_" + filename + "_" + width + "_" + height + ".jpg") //create a new file in the folder thumb with the name including the set parameters
+                .catch((err) => console.log(err)); //catch any error and display it to the console
+            //Send successful message and status 200 if operation complete
+            res.send("Successful, please check the thumb folder.");
+            res.status(200);
+        }
     }
     catch (err) {
-        console.log(err);
-        res.send(err + " Return to /api to check the syntax again.");
+        //Send error message and status 500 if operation faulty
+        res.send(err + " If necessary return to /api to check the syntax again.");
+        res.status(500);
     }
 });
 exports.default = convert;
