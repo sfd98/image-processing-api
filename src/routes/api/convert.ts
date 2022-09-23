@@ -1,6 +1,8 @@
 import express from "express";
 import sharp from "sharp";
 import fs from "fs";
+import resize from "../../helpers/resize";
+import validateInputs from "../../helpers/validateInput";
 
 const convert = express.Router();
 
@@ -10,6 +12,8 @@ convert.get("/", (req: express.Request, res: express.Response): void => {
 	const filename = String(req.query.filename);
 	const width = Number(req.query.width);
 	const height = Number(req.query.height);
+
+	//New
 
 	//Variable in which the image directory of the requested image is saved
 	const imageDirectory: string = "images/" + filename + ".jpg";
