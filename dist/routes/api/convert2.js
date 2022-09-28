@@ -4,8 +4,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
-const sharp_1 = __importDefault(require("sharp"));
 const fs_1 = __importDefault(require("fs"));
+const resize_1 = __importDefault(require("../../helpers/resize"));
 const convert = express_1.default.Router();
 convert.get("/", (req, res) => {
     //Variable decleration.
@@ -36,10 +36,7 @@ convert.get("/", (req, res) => {
         }
         else {
             //Image processing with sharp
-            (0, sharp_1.default)(imageDirectory) //Access the image directory of the image that is to be processed
-                .resize(width, height) //input of the numerical parameters to perform the resize
-                .toFile("thumb/thumb_" + filename + "_" + width + "_" + height + ".jpg") //create a new file in the folder thumb with the name including the set parameters
-                .catch((err) => console.log(err)); //catch any error and display it to the console
+            (0, resize_1.default)(filename, width, height);
             //Send successful message and status 200 if operation complete
             res.send("Successful, please check the thumb folder.");
             res.status(200);
