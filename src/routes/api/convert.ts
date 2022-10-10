@@ -1,6 +1,6 @@
 import express from "express";
-import sharp from "sharp";
 import fs from "fs";
+import resize from "../../helpers/resize";
 
 const convert = express.Router();
 
@@ -11,9 +11,6 @@ convert.get("/", (req: express.Request, res: express.Response): void => {
   const width = Number(req.query.width);
   const height = Number(req.query.height);
 
-  //Variable in which the image directory of the requested image is saved
-  const imageDirectory: string = "images/" + filename + ".jpg";
-
   //Image processing
   try {
     //Error handling. If error send error code 400.
@@ -22,7 +19,7 @@ convert.get("/", (req: express.Request, res: express.Response): void => {
       //check if any parameter was not set or numerical values are 0
       res.status(400);
       throw "Parameters in the query uncomplete or set to 0!";
-    } else if (fs.existsSync(imageDirectory) == false) {
+    } else if (fs.existsSync("images/" + filename + ".jpg") == false) {
       //using Syncronous code, checking if the requested image exists
       res.status(400);
       throw "File not found. Check the spelling of the filename or use another one!";
@@ -32,10 +29,7 @@ convert.get("/", (req: express.Request, res: express.Response): void => {
       throw "Width and height should be > 0.";
     } else {
       //Image processing with sharp
-      sharp(imageDirectory) //Access the image directory of the image that is to be processed
-        .resize(width, height) //input of the numerical parameters to perform the resize
-        .toFile("thumb/thumb_" + filename + "_" + width + "_" + height + ".jpg") //create a new file in the folder thumb with the name including the set parameters
-        .catch((err) => console.log(err)); //catch any error and display it to the console
+      resize(filename, width, height);
 
       //Send successful message and status 200 if operation complete
       res.send("Successful, please check the thumb folder.");

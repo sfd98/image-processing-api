@@ -6,11 +6,11 @@ const routes = express.Router();
 //Route for the endpoint /api. Instructions to use the convert API.
 
 routes.get("/", (req: express.Request, res: express.Response): void => {
-	res.send(
-		"Convert API. Use the following syntax without * in the URL: /convert?filename=*filename*&width=*number*&height=*number*"
-	);
+  res.send(
+    "Convert API. Use the following syntax without * in the URL: /convert?filename=*filename*&width=*number*&height=*number*"
+  );
 });
 
-routes.use("/convert2", convert);
+routes.use("/convert", convert);
 
 export default routes;

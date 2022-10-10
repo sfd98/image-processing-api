@@ -24,11 +24,11 @@ describe("Test endpoint responses", () => {
 });
 describe("Test image processing", () => {
     it("creates a new image", () => {
-        /*sharp("images/fjord.jpg")
-            .resize(123, 456)
-            .toFile("thumb/test_fjord_123_456.jpg");
-        */
-        (0, resize_1.default)("images/fjord", 123, 456);
+        (0, resize_1.default)("images/test_fjord", 123, 456);
         expect(fs_1.default.existsSync("thumb/test_fjord_123_456.jpg") == true);
+    });
+    it("throws error with invalid input", () => {
+        (0, resize_1.default)("images/test_something", 0, -234);
+        expect(fs_1.default.existsSync("thumb/test_something_0_-234.jpg") == false);
     });
 });
