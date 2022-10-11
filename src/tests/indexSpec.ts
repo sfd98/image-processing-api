@@ -24,8 +24,4 @@ describe("Test image processing", () => {
     resize("images/test_fjord", 123, 456);
     expect(fs.existsSync("thumb/test_fjord_123_456.jpg") == true);
   });
-  it("throws error with invalid input", () => {
-    resize("images/test_something", 0, -234);
-    expect(fs.existsSync("thumb/test_something_0_-234.jpg") == false);
-  });
 });
