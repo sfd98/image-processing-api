@@ -4,15 +4,10 @@
 
 - This API does not have any interface. It does not display the images in the browser.
 - Start the server by running "npm run start". Build it with "npx tsc". Test it with npm run test
-- Navigate to /api by typing it into the URL
-- Write your instructions for the image processing in the URL based on the provided syntax (without *: api/convert?filename=*filename*&width=*number*&height=*number\*)
+- Navigate to the homepage by typing into the URL localhost:3000
+- Write your instructions for the image processing in the URL based on the provided syntax (without *: api?filename=*filename*&width=*number*&height=*number\*)
 - Available image files are the ones provided by udacity. (encenadaport, fjord, icelandwaterfall, palmtunnel, santamonica)
 - Run the API and check the thumb folder which includes the generated image
-
-## Additional information
-
-- Regarding prettier: The VSCode Extention was used for this project.
-
 # Given Instructions
 
 This project aims to give you a real-world scenario in which you would read and write to your disk via a Node.js express server rather than a database. The project you create serves two purposes: to prepare you for setting up scalable code and architecture for real-world projects and tie together some of the most popular middleware and utilities found in Node.js projects. This project barely touches the surface of what is possible but will prove your ability to use what you’ve learned in real-world scenarios.

@@ -16,10 +16,10 @@ export default async function dataInput(
   try {
     if (!filename || !width || !height || width < 0 || height < 0) {
       //check if any parameter was not set or numerical values are 0 or smaller than 0
-      throw "Wrong Parameters.";
+      throw "Wrong Parameters. Either not filled, equal to 0 or less than 0.";
     } else if (fs.existsSync("images/" + filename + ".jpg") == false) {
       //Check if the requested image exists
-      throw "File not found";
+      throw "File not found.";
     }
   } catch (err) {
     //Return error to the error handler
