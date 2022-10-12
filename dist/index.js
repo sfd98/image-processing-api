@@ -8,7 +8,7 @@ const index_1 = __importDefault(require("./routes/index"));
 const app = (0, express_1.default)();
 const port = 3000;
 app.get("/", (req, res) => {
-    res.send("Hello World!");
+    res.send("Welcome! Use the following syntax without asterisks: /api?filename=*filename*&width=*width*&height=*height*");
 });
 app.use("/api", index_1.default);
 // start the Express server

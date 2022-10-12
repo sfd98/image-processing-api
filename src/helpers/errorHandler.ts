@@ -8,8 +8,6 @@ export default function errorHandler(
   next: express.NextFunction
 ) {
   if (err) {
-    res
-      .status(400)
-      .send(err + " If necessary return to /api to check the syntax again.");
+    res.status(400).send(err + " Check the syntax again.");
   }
 }

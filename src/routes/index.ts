@@ -1,16 +1,18 @@
 import express from "express";
-import convert from "./api/convert";
+import dataInput from "../helpers/inputs";
+import errorHandler from "../helpers/errorHandler";
 
 const routes = express.Router();
 
-//Route for the endpoint /api. Instructions to use the convert API.
+//Route for the endpoint /api.
 
-routes.get("/", (_req: express.Request, res: express.Response): void => {
-  res.send(
-    "Convert API. Use the following syntax without * in the URL: /convert?filename=*filename*&width=*number*&height=*number*"
-  );
+routes.use(dataInput);
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+routes.get("/", () => {
+  console.log("Resize API");
 });
 
-routes.use("/convert", convert);
+routes.use(errorHandler);
 
 export default routes;

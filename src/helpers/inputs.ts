@@ -3,7 +3,7 @@ import fs from "fs";
 import resize from "./resize";
 import path from "path";
 
-export default function dataInput(
+export default async function dataInput(
   req: express.Request,
   res: express.Response,
   next: express.NextFunction
@@ -26,30 +26,25 @@ export default function dataInput(
     return next(err);
   }
 
-  const resultPath: string = path.join(
-    __dirname +
-      "../../../thumb/thumb_" +
-      filename +
-      "_" +
-      width +
-      "_" +
-      height +
-      ".jpg"
+  //Caching and Resizing
+  const checkPath: string = path.join(
+    __dirname,
+    "..",
+    "..",
+    "images",
+    "thumb_" + filename + "_" + height + "_" + width + ".jpg"
   );
-
   try {
-    if (fs.existsSync(resultPath) == true) {
+    if (fs.existsSync(checkPath) == true) {
       //Check if path already exists (Caching)
-      res.status(200).sendFile(resultPath);
+      res.status(200).sendFile(checkPath);
     } else {
       //Image processing with sharp
-      console.log(resultPath);
-      resize(filename, width, height);
-      res.status(200).sendFile(resultPath);
+      const newImage = await resize(filename, width, height);
+      res.status(200).sendFile(path.join(__dirname, "..", "..", newImage));
     }
   } catch (err) {
     res.send(err);
   }
-
   next();
 }
