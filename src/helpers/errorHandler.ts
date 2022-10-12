@@ -3,7 +3,9 @@ import express from "express";
 export default function errorHandler(
   err: express.ErrorRequestHandler,
   req: express.Request,
-  res: express.Response
+  res: express.Response,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  next: express.NextFunction
 ) {
   if (err) {
     res

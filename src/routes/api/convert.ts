@@ -8,7 +8,7 @@ convert.get(
   "/",
   dataInput,
   errorHandler,
-  (_req: express.Request, res: express.Response): void => {
+  (req: express.Request, res: express.Response): void => {
     res.send("Successful");
   }
 );

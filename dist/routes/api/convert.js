@@ -7,7 +7,7 @@ const express_1 = __importDefault(require("express"));
 const inputs_1 = __importDefault(require("../../helpers/inputs"));
 const errorHandler_1 = __importDefault(require("../../helpers/errorHandler"));
 const convert = express_1.default.Router();
-convert.get("/", inputs_1.default, errorHandler_1.default, (_req, res) => {
+convert.get("/", inputs_1.default, errorHandler_1.default, (req, res) => {
     res.send("Successful");
 });
 exports.default = convert;

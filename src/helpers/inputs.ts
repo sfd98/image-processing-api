@@ -36,14 +36,19 @@ export default function dataInput(
       height +
       ".jpg"
   );
-  if (fs.existsSync(resultPath) == true) {
-    //Check if path already exists (Caching)
-    res.status(200).sendFile(resultPath);
-  } else {
-    //Image processing with sharp
-    console.log(resultPath);
-    resize(filename, width, height);
-    res.status(200).sendFile(resultPath);
+
+  try {
+    if (fs.existsSync(resultPath) == true) {
+      //Check if path already exists (Caching)
+      res.status(200).sendFile(resultPath);
+    } else {
+      //Image processing with sharp
+      console.log(resultPath);
+      resize(filename, width, height);
+      res.status(200).sendFile(resultPath);
+    }
+  } catch (err) {
+    res.send(err);
   }
 
   next();

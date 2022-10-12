@@ -33,15 +33,20 @@ function dataInput(req, res, next) {
         "_" +
         height +
         ".jpg");
-    if (fs_1.default.existsSync(resultPath) == true) {
-        //Check if path already exists (Caching)
-        res.status(200).sendFile(resultPath);
+    try {
+        if (fs_1.default.existsSync(resultPath) == true) {
+            //Check if path already exists (Caching)
+            res.status(200).sendFile(resultPath);
+        }
+        else {
+            //Image processing with sharp
+            console.log(resultPath);
+            (0, resize_1.default)(filename, width, height);
+            res.status(200).sendFile(resultPath);
+        }
     }
-    else {
-        //Image processing with sharp
-        console.log(resultPath);
-        (0, resize_1.default)(filename, width, height);
-        res.status(200).sendFile(resultPath);
+    catch (err) {
+        res.send(err);
     }
     next();
 }
