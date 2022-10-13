@@ -1,6 +1,5 @@
 {
-  "semi": true,
-  "tabWidth": 2,
-  "endOfLine": "crlf",
-  "useTabs": true
+	"semi": true,
+	"tabWidth": 2,
+	"endOfLine": "lf"
 }

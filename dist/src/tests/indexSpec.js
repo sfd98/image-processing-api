@@ -12,15 +12,19 @@ describe("Test endpoint responses", () => {
         (0, supertest_1.default)(index_1.default).get("/api").expect(200);
     }),
         it("gets a full request", () => {
-            (0, supertest_1.default)(index_1.default).get("/api?filename=fjord&width=567&height=789").expect(200);
+            (0, supertest_1.default)(index_1.default)
+                .get("/api/convert2?filename=fjord&width=567&height=789")
+                .expect(200);
         }),
         it("throws error at wrong syntax", () => {
-            (0, supertest_1.default)(index_1.default).get("/api?filename=fjord&width=567&height=-789").expect(400);
+            (0, supertest_1.default)(index_1.default)
+                .get("/api/convert2?filename=fjord&width=567&height=-789")
+                .expect(400);
         });
 });
 describe("Test image processing", () => {
     it("creates a new image", () => {
         (0, resize_1.default)("images/test_fjord", 123, 456);
-        expect(fs_1.default.existsSync("images/test_fjord_123_456.jpg") == true);
+        expect(fs_1.default.existsSync("thumb/test_fjord_123_456.jpg") == true);
     });
 });
